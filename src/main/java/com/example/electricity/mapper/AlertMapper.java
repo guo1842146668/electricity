@@ -4,6 +4,9 @@ package com.example.electricity.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.electricity.entity.Alert;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  *  Mapper 接口
@@ -14,4 +17,5 @@ import com.example.electricity.entity.Alert;
  */
 public interface AlertMapper extends BaseMapper<Alert> {
 
+    List<Map<String,Object>> getAlert(Map<String,Object> map);
 }

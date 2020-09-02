@@ -3,12 +3,9 @@ package com.example.electricity.controller;
 
 import com.example.electricity.common.Result;
 import com.example.electricity.common.ResultUtil;
+import com.example.electricity.entity.Equipment;
 import com.example.electricity.service.IEquipmentService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -46,5 +43,16 @@ public class EquipmentController {
     @GetMapping("/getEquipmentNO")
     public Result getEquipmentNO(String equipmentNO){
         return ResultUtil.seccess(iEquipmentService.getEquipmentNO(equipmentNO));
+    }
+
+    @PutMapping("modify")
+    public Result getEquipmentByEquipmentNO(String equipmentNO,Integer equipmentType,String equipmentAddress){
+        Equipment equipmentByEquipmentNO = iEquipmentService.getEquipmentByEquipmentNO(equipmentNO);
+        equipmentByEquipmentNO.setEquipmentType(equipmentType);
+        equipmentByEquipmentNO.setEquipmentAddress(equipmentAddress);
+        if(iEquipmentService.updateEquipment(equipmentByEquipmentNO) > 0){
+            return  ResultUtil.seccess(true);
+        }
+        return  ResultUtil.seccess(false);
     }
 }

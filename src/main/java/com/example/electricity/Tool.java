@@ -20,7 +20,7 @@ public class Tool {
      * <p>
      * 读取控制台内容
      * </p>
-     *//*
+     */
     public static String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
         StringBuilder help = new StringBuilder();
@@ -109,5 +109,5 @@ public class Tool {
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
-    }*/
+    }
 }

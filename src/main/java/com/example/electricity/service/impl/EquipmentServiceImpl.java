@@ -1,5 +1,6 @@
 package com.example.electricity.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.electricity.entity.Equipment;
 import com.example.electricity.mapper.EquipmentMapper;
 import com.example.electricity.service.IEquipmentService;
@@ -30,5 +31,22 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
     @Override
     public Map<String, Object> getEquipmentNO(String equipmentNO) {
         return equipmentMapper.getEquipmentNO(equipmentNO);
+    }
+
+    @Override
+    public int saveEquipment(Equipment equipment) {
+        return equipmentMapper.insert(equipment);
+    }
+
+    @Override
+    public int updateEquipment(Equipment equipment) {
+        return equipmentMapper.updateById(equipment);
+    }
+
+    @Override
+    public Equipment getEquipmentByEquipmentNO(String equipmentNO) {
+        QueryWrapper<Equipment> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("equipmentNO",equipmentNO);
+        return equipmentMapper.selectOne(queryWrapper);
     }
 }

@@ -2,4 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.electricity.mapper.AlertMapper">
 
+    <select id="getAlert" resultType="java.util.Map">
+        SELECT alertTime,equipmentNO,equipmentAddress
+        from alert a ,equipment e
+        where a.alertEquipment=e.equipmentID and e.userID = #{userID}
+        <if test="condition != null">
+        and (e.equipmentNO like "%"#{condition}"%" || e.equipmentName like "%"#{condition}"%" || e.equipmentAddress like "%"#{condition}"%")
+        </if>
+        <if test="startDate != null">
+            and a.alertTime &gt;= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and a.alertTime  &lt;= date_sub(#{endDate},interval -1 day)
+        </if>
+    </select>
 </mapper>

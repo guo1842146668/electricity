@@ -9,10 +9,10 @@
         <if test="condition != null">
         and (e.equipmentNO like "%"#{condition}"%" || e.equipmentName like "%"#{condition}"%" || e.equipmentAddress like "%"#{condition}"%")
         </if>
-        <if test="startDate != null">
+        <if test="startDate != null &amp; startDate !=''" >
             and a.alertTime &gt;= #{startDate}
         </if>
-        <if test="endDate != null">
+        <if test="endDate != null &amp; endDate !=''">
             and a.alertTime  &lt;= date_sub(#{endDate},interval -1 day)
         </if>
     </select>

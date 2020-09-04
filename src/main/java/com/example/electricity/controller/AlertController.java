@@ -30,12 +30,15 @@ public class AlertController {
     private IAlertService iAlertService;
 
     @GetMapping("/getAlert")
-    public Result getAlert(Integer userID,String condition,String startDate,String endDate){
+    public Result getAlert(Integer userID,String condition,String startDate,String endDate,Integer page,Integer count){
+        if(page == null || count == null){
+            return ResultUtil.error(500,"分页 页数或条数不能为null") ;
+        }
         Map<String,Object> map=new HashMap<>();
         map.put("userID",userID);
         map.put("condition",condition);
         map.put("startDate",startDate);
         map.put("endDate",endDate);
-        return ResultUtil.seccess(iAlertService.getAlert(map));
+        return ResultUtil.seccess(iAlertService.getAlert(map,page,count));
     }
 }

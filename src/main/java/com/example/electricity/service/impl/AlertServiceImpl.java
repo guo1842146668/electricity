@@ -4,6 +4,8 @@ import com.example.electricity.entity.Alert;
 import com.example.electricity.mapper.AlertMapper;
 import com.example.electricity.service.IAlertService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,7 +25,10 @@ public class AlertServiceImpl extends ServiceImpl<AlertMapper, Alert> implements
     @Resource
     private AlertMapper alertMapper;
     @Override
-    public List<Map<String, Object>> getAlert(Map<String,Object> map) {
-        return alertMapper.getAlert(map);
+    public PageInfo<Map<String, Object>> getAlert(Map<String,Object> map,Integer page,Integer count) {
+        PageHelper.startPage(page,count);
+        List<Map<String, Object>> alert = alertMapper.getAlert(map);
+        PageInfo<Map<String, Object>> pageInfo=new PageInfo<>(alert);
+        return pageInfo;
     }
 }

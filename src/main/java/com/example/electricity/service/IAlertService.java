@@ -2,6 +2,7 @@ package com.example.electricity.service;
 
 import com.example.electricity.entity.Alert;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -16,5 +17,5 @@ import java.util.Map;
  */
 public interface IAlertService extends IService<Alert> {
 
-    List<Map<String,Object>> getAlert(Map<String,Object> map);
+    PageInfo<Map<String,Object>> getAlert(Map<String,Object> map,Integer page,Integer count);
 }

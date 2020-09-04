@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.electricity.entity.Dict;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -16,5 +17,5 @@ import java.util.List;
  */
 public interface DictMapper extends BaseMapper<Dict> {
 
-    List<String> getGuide(String type);
+    List<Map<String,Object>> getGuide(String type);
 }

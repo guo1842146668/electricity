@@ -8,6 +8,7 @@ import com.example.electricity.entity.Scheduled;
 import com.example.electricity.service.IScheduledService;
 import org.springframework.scheduling.config.TriggerTask;
 import org.springframework.scheduling.support.CronTrigger;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ import java.util.List;
  * @author jobob
  * @since 2020-09-02
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/scheduled")
 public class ScheduledController {
@@ -39,6 +41,8 @@ public class ScheduledController {
             scheduled.setCronStatus(-1);
             for (int i = 0; i < 5 - byUserID.size(); i++) {
                 scheduled.setCronName(userID + "task" + (i + 1 + byUserID.size()));
+                scheduled.setCronStartTime("0 00 00 * * ?");
+                scheduled.setCronEndTime("0 00 00 * * ?");
                 scheduled.setUserID(userID);
                 iScheduledService.saveScheduled(scheduled);
             }
@@ -108,6 +112,8 @@ public class ScheduledController {
         Scheduled scheduledByID = iScheduledService.getScheduledByID(cronId);
         defaultSchedulingConfigurer.cancelTriggerTask(scheduledByID.getUserID() + "start" + scheduledByID.getCronName());
         defaultSchedulingConfigurer.cancelTriggerTask(scheduledByID.getUserID() + "end" + scheduledByID.getCronName());
+        scheduledByID.setCronStatus(-1);
+        iScheduledService.updateScheduled(scheduledByID);
         return ResultUtil.seccess();
     }
 

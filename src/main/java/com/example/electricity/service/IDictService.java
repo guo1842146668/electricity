@@ -4,6 +4,7 @@ import com.example.electricity.entity.Dict;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -15,5 +16,5 @@ import java.util.List;
  */
 public interface IDictService extends IService<Dict> {
 
-    List<String> getGuide(String type);
+    List<Map<String,Object>> getGuide(String type);
 }

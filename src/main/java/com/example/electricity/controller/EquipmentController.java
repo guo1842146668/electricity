@@ -45,7 +45,7 @@ public class EquipmentController {
         return ResultUtil.seccess(iEquipmentService.getEquipmentNO(equipmentNO));
     }
 
-    @PutMapping("modify")
+    @PutMapping("/modify")
     public Result getEquipmentByEquipmentNO(String equipmentNO,Integer equipmentType,String equipmentAddress){
         Equipment equipmentByEquipmentNO = iEquipmentService.getEquipmentByEquipmentNO(equipmentNO);
         equipmentByEquipmentNO.setEquipmentType(equipmentType);

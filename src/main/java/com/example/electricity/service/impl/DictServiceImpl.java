@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,7 +24,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     private DictMapper dictMapper;
 
     @Override
-    public List<String> getGuide(String type) {
+    public List<Map<String,Object>> getGuide(String type) {
         return dictMapper.getGuide(type);
     }
 }

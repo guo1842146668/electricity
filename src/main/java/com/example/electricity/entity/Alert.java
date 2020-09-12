@@ -34,7 +34,7 @@ public class Alert implements Serializable {
 
     @ApiModelProperty(value = "警报的设备")
     @TableField("alertEquipment")
-    private Integer alertEquipment;
+    private Integer equipmentNO;
 
 
 }

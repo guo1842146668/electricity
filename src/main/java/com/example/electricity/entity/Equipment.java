@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -60,4 +62,15 @@ public class Equipment implements Serializable {
     @TableField("electricStatus")
     private Integer electricStatus;
 
+    @ApiModelProperty(value = "运行状态")
+    @TableField("runningState")
+    private Integer runningState;
+
+    @ApiModelProperty(value = "运行模式")
+    @TableField("OperationMode")
+    private Integer OperationMode;
+
+    @ApiModelProperty(value = "故障状态")
+    @TableField("FaultStatus")
+    private Integer FaultStatus;
 }

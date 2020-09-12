@@ -6,6 +6,7 @@ import com.example.electricity.common.ResultUtil;
 import com.example.electricity.entity.Equipment;
 import com.example.electricity.service.IEquipmentService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -54,5 +55,35 @@ public class EquipmentController {
             return  ResultUtil.seccess(true);
         }
         return  ResultUtil.seccess(false);
+    }
+
+    @PutMapping("open")
+    public Result open(String equipmentNO){
+        Map<String, Object> equipmentNO1 = iEquipmentService.getEquipmentNO(equipmentNO);
+        if(equipmentNO1.get("OperationMode").equals("1")){
+            return ResultUtil.error(500,"当前为手动模式，无法操作！");
+        }
+        RestTemplate restTemplate = new RestTemplate();
+        String forObject = restTemplate.getForObject("http://127.0.0.1:80/equipment/open?equipmentNO=" + equipmentNO, String.class);
+        if(forObject.equals("success")){
+            return ResultUtil.seccess();
+        }else{
+            return ResultUtil.error(500,"开启失败");
+        }
+    }
+
+    @PutMapping("down")
+    public Result down(String equipmentNO){
+        Map<String, Object> equipmentNO1 = iEquipmentService.getEquipmentNO(equipmentNO);
+        if(equipmentNO1.get("OperationMode").equals("1")){
+            return ResultUtil.error(500,"当前为手动模式，无法操作！");
+        }
+        RestTemplate restTemplate = new RestTemplate();
+        String forObject = restTemplate.getForObject("http://127.0.0.1:80/equipment/down?equipmentNO=" + equipmentNO, String.class);
+        if(forObject.equals("success")){
+            return ResultUtil.seccess();
+        }else{
+            return ResultUtil.error(500,"关闭失败");
+        }
     }
 }

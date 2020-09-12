@@ -16,11 +16,12 @@ import java.util.Map;
  */
 public interface IScheduledService extends IService<Scheduled> {
 
-    List<Scheduled> getByUserID(Integer userID);
+    List<Scheduled> getByUserID(String equipmentNO);
 
     int saveScheduled(Scheduled scheduled);
 
     Scheduled getScheduledByID(Integer userID);
 
     int updateScheduled(Scheduled scheduled);
+
 }

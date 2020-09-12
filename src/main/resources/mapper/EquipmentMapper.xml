@@ -6,7 +6,7 @@
         select  equipmentNO,equipmentName,equipmentAddress,electricStatus
         from equipment where userID = #{userID}
 
-        <if test="equipmentNO != null">
+        <if test="condition != null">
             and (equipmentNO like "%"#{condition}"%" || equipmentName like "%"#{condition}"%" || equipmentAddress like "%"#{condition}"%")
         </if>
 
@@ -15,6 +15,7 @@
         select
         (SELECT dictName from dict where dictID = equipment.equipmentType) equipmentType,
         equipmentNO,equipmentType,equipmentAddress,electricCurrentIA,electricCurrentIB,electricCurrentIC,electricStatus
+        ,runningState,OperationMode,FaultStatus
         from equipment where equipmentNO = #{equipmentNO}
     </select>
 </mapper>

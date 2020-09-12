@@ -25,9 +25,9 @@ public class ScheduledServiceImpl extends ServiceImpl<ScheduledMapper, Scheduled
     @Resource
     private ScheduledMapper scheduledMapper;
     @Override
-    public List<Scheduled> getByUserID(Integer userID) {
+    public List<Scheduled> getByUserID(String equipmentNO) {
         QueryWrapper<Scheduled> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("userID",userID);
+        queryWrapper.eq("equipmentNO",equipmentNO);
         return scheduledMapper.selectList(queryWrapper);
     }
 
@@ -45,4 +45,5 @@ public class ScheduledServiceImpl extends ServiceImpl<ScheduledMapper, Scheduled
     public int updateScheduled(Scheduled scheduled) {
         return scheduledMapper.updateById(scheduled);
     }
+
 }

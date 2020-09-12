@@ -4,12 +4,13 @@ package com.example.electricity.controller;
 import com.example.electricity.common.Result;
 import com.example.electricity.common.ResultUtil;
 import com.example.electricity.entity.User;
-import com.example.electricity.service.IUserService;
+import com.example.electricity.service.ISysUserService;
 import com.example.electricity.tool.ClassIsNull;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FileUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,18 +22,19 @@ import java.util.UUID;
 
 /**
  * <p>
- *  前端控制器
+ * 用户信息表 前端控制器
  * </p>
  *
  * @author jobob
- * @since 2020-09-01
+ * @since 2020-09-05
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/sysUser")
+public class SysUserController {
+
     @Resource
-    private IUserService iUserService;
+    private ISysUserService ISysUserService;
 
     @ApiOperation(value = "登陆",notes = "登陆接口")
     @ApiImplicitParams(value = {
@@ -41,11 +43,12 @@ public class UserController {
     })
     @GetMapping("/login")
     public Result Login(String userAccount, String userPassword){
-        User user = iUserService.Login(userAccount, userPassword);
+        String s = new Md5Hash(userPassword, ISysUserService.getSalt(userAccount)).toString();
+        User user = ISysUserService.Login(userAccount, s);
         if(ClassIsNull.isNull(user)){
             return  ResultUtil.error(500,"账户或密码错误！");
         }
-      return   ResultUtil.seccess(user);
+        return   ResultUtil.seccess(user);
     }
 
     @ApiOperation(value = "修改密码",notes = "修改密码接口")
@@ -56,12 +59,13 @@ public class UserController {
     })
     @PutMapping("/modifyPassword")
     public Result modifyPassword(Integer userID, String userPassword,String newPassword){
-        User user = iUserService.getByID(userID);
-        if(!user.getUserPassword().equals(userPassword)){
+        User user = ISysUserService.getByID(userID);
+        String s = new Md5Hash(userPassword, user.getSalt()).toString();
+        if(!user.getPassword().equals(s)){
             return  ResultUtil.error(500,"原密码错误！");
         }
-        user.setUserPassword(newPassword);
-        if(iUserService.UpdateUser(user) > 0){
+        user.setPassword(new Md5Hash(newPassword, user.getSalt()).toString());
+        if(ISysUserService.UpdateUser(user) > 0){
             return ResultUtil.seccess(true);
         }
         return ResultUtil.seccess(false);
@@ -74,13 +78,13 @@ public class UserController {
     @PostMapping(value="/uploadImage")
     @ResponseBody
     public Result uploadImage(@RequestParam(value="file") MultipartFile file, Integer userID){
-        User user = iUserService.getByID(userID);
+        User user = ISysUserService.getByID(userID);
         if(ClassIsNull.isNull(user)){
             return  ResultUtil.error(500,"未查询到用户");
         }
         String resource = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("/")).getPath();
-        String url="static"+ File.separator +"image" + File.separator + userID;
-        File dest = new File(resource+url);
+        String url="image" + File.separator + File.separator + userID;
+        File dest = new File(resource+"static"+ File.separator+File.separator +url);
         if(dest.exists()) {
             dest.mkdir();
         }
@@ -90,7 +94,7 @@ public class UserController {
         }
         String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
         String filename = UUID.randomUUID().toString().replaceAll("-", "") + suffix;
-        url +=File.separator + filename;
+        url +=File.separator + File.separator + filename;
         String targetUploadPath = dest + File.separator + filename;
         try {
             FileUtils.writeByteArrayToFile(new File(targetUploadPath), file.getBytes());
@@ -98,8 +102,8 @@ public class UserController {
             e.printStackTrace();
             return ResultUtil.error(400,"储存错误");
         }
-        user.setUserPortrait(url);
-        if( iUserService.UpdateUser(user) > 0){
+        user.setActiveCode(url);
+        if( ISysUserService.UpdateUser(user) > 0){
             return  ResultUtil.seccess(true);
         }
         return  ResultUtil.seccess(false);
@@ -108,9 +112,9 @@ public class UserController {
     @ApiOperation(value = "根据ID查询用户",notes = "根据ID查询用户接口")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "userID", value = "账户", required = true,dataType = "Integer"),
-   })
+    })
     @GetMapping("/getByID")
     public Result getByID(Integer userID){
-        return ResultUtil.seccess(iUserService.getByID(userID));
+        return ResultUtil.seccess(ISysUserService.getByID(userID));
     }
 }

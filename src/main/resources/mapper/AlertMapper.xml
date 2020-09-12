@@ -3,9 +3,9 @@
 <mapper namespace="com.example.electricity.mapper.AlertMapper">
 
     <select id="getAlert" resultType="java.util.Map">
-        SELECT alertTime,equipmentNO,equipmentAddress
+        SELECT alertTime,a.equipmentNO,equipmentAddress
         from alert a ,equipment e
-        where a.alertEquipment=e.equipmentID and e.userID = #{userID}
+        where a.equipmentNO=e.equipmentNO and e.userID = #{userID}
         <if test="condition != null">
         and (e.equipmentNO like "%"#{condition}"%" || e.equipmentName like "%"#{condition}"%" || e.equipmentAddress like "%"#{condition}"%")
         </if>

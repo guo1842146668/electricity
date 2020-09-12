@@ -40,8 +40,8 @@ public class Scheduled implements Serializable {
     private String cronEndTime;
 
     @ApiModelProperty(value = "用户ID")
-    @TableField("userID")
-    private Integer userID;
+    @TableField("equipmentNO")
+    private String equipmentNO;
 
     @ApiModelProperty(value = "定时器状态")
     @TableField("cronStatus")

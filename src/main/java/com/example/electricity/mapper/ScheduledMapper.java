@@ -3,6 +3,8 @@ package com.example.electricity.mapper;
 import com.example.electricity.entity.Scheduled;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.Map;
+
 /**
  * <p>
  *  Mapper 接口

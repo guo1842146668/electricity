@@ -21,7 +21,7 @@ public class Tool {
      * 读取控制台内容
      * </p>
      */
-   /* public static String scanner(String tip) {
+    public static String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
         StringBuilder help = new StringBuilder();
         help.append("请输入" + tip + "：");
@@ -50,7 +50,7 @@ public class Tool {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/electricity?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true");
+        dsc.setUrl("jdbc:mysql://localhost:3306/shiro_action?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
@@ -59,6 +59,7 @@ public class Tool {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
+        pc.setParent("com.example.electricity");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -109,5 +110,5 @@ public class Tool {
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
-    }*/
+    }
 }

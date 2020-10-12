@@ -15,5 +15,6 @@
         <if test="endDate != null &amp; endDate !=''">
             and a.alertTime  &lt;= date_sub(#{endDate},interval -1 day)
         </if>
+        ORDER BY  a.alertTime DESC
     </select>
 </mapper>

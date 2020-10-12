@@ -4,6 +4,7 @@ package com.example.electricity.controller;
 import com.example.electricity.common.Result;
 import com.example.electricity.common.ResultUtil;
 import com.example.electricity.service.IAlertService;
+import com.example.electricity.tool.ReadFile;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,10 @@ public class AlertController {
     public Result getAlert(Integer userID,String condition,String startDate,String endDate,Integer page,Integer count){
         if(page == null || count == null){
             return ResultUtil.error(500,"分页 页数或条数不能为null") ;
+        }
+        if (!"".equals(condition) && condition != null) {
+            condition = ReadFile.specialStr(condition);// 排除%等通配符
+            condition = ReadFile.specialStrKeyword(condition);
         }
         Map<String,Object> map=new HashMap<>();
         map.put("userID",userID);

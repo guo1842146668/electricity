@@ -5,6 +5,7 @@ import com.example.electricity.common.Result;
 import com.example.electricity.common.ResultUtil;
 import com.example.electricity.entity.Equipment;
 import com.example.electricity.service.IEquipmentService;
+import com.example.electricity.tool.ReadFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,6 +36,10 @@ public class EquipmentController {
      */
     @GetMapping("/getAllByUserID")
     public Result getAllByUserID(Integer userID,String condition){
+        if (!"".equals(condition) && condition != null) {
+            condition = ReadFile.specialStr(condition);// 排除%等通配符
+            condition = ReadFile.specialStrKeyword(condition);
+        }
         Map<String,Object> map=new HashMap<>();
         map.put("userID",userID);
         map.put("condition",condition);
@@ -80,6 +85,17 @@ public class EquipmentController {
         }
         RestTemplate restTemplate = new RestTemplate();
         String forObject = restTemplate.getForObject("http://127.0.0.1:80/equipment/down?equipmentNO=" + equipmentNO, String.class);
+        if(forObject.equals("success")){
+            return ResultUtil.seccess();
+        }else{
+            return ResultUtil.error(500,"关闭失败");
+        }
+    }
+
+    @PutMapping("read")
+    public Result read(String equipmentNO){
+        RestTemplate restTemplate = new RestTemplate();
+        String forObject = restTemplate.getForObject("http://127.0.0.1:80/equipment/read?equipmentNO=" + equipmentNO, String.class);
         if(forObject.equals("success")){
             return ResultUtil.seccess();
         }else{

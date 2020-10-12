@@ -46,4 +46,12 @@ public class ScheduledServiceImpl extends ServiceImpl<ScheduledMapper, Scheduled
         return scheduledMapper.updateById(scheduled);
     }
 
+    @Override
+    public List<Scheduled> getByCronId(String equipmentNO) {
+        QueryWrapper<Scheduled> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("equipmentNO",equipmentNO);
+        queryWrapper.eq("cronStatus",1);
+        return scheduledMapper.selectList(queryWrapper);
+    }
+
 }

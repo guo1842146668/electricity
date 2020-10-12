@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -83,8 +84,9 @@ public class SysUserController {
             return  ResultUtil.error(500,"未查询到用户");
         }
         String resource = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("/")).getPath();
+        resource = resource.substring(0,resource.lastIndexOf("electricity"));
         String url="image" + File.separator + File.separator + userID;
-        File dest = new File(resource+"static"+ File.separator+File.separator +url);
+        File dest = new File(resource+File.separator +url);
         if(dest.exists()) {
             dest.mkdir();
         }

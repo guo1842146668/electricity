@@ -3,13 +3,14 @@
 <mapper namespace="com.example.electricity.mapper.EquipmentMapper">
 
     <select id="getAllByID" parameterType="map" resultType="java.util.Map">
-        select  equipmentNO,equipmentName,equipmentAddress,electricStatus
+        select  equipmentNO,equipmentName,equipmentAddress,electricStatus,(SELECT dictName from dict where dictID = equipment.equipmentType) equipmentType,
+        (SELECT COUNT(*) from equipment where userID = #{userID}) as count
         from equipment where userID = #{userID}
 
         <if test="condition != null">
             and (equipmentNO like "%"#{condition}"%" || equipmentName like "%"#{condition}"%" || equipmentAddress like "%"#{condition}"%")
         </if>
-
+        order by electricStatus desc
     </select>
     <select id="getEquipmentNO" parameterType="String" resultType="java.util.Map">
         select

@@ -24,4 +24,6 @@ public interface IScheduledService extends IService<Scheduled> {
 
     int updateScheduled(Scheduled scheduled);
 
+    List<Scheduled> getByCronId(String equipmentNO);
+
 }

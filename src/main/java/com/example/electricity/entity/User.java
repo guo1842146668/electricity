@@ -57,5 +57,9 @@ public class User implements Serializable {
     @ApiModelProperty(value = "部门ID")
     private Integer deptId;
 
+    @ApiModelProperty(value = "用户类型")
+    private Integer type;
+
+
 
 }

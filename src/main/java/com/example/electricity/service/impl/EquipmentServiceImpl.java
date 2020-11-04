@@ -29,6 +29,11 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
     }
 
     @Override
+    public List<Map<String, Object>> getAllByIDAdmin(Map<String, Object> map) {
+        return equipmentMapper.getAllByIDAdmin(map);
+    }
+
+    @Override
     public Map<String, Object> getEquipmentNO(String equipmentNO) {
         return equipmentMapper.getEquipmentNO(equipmentNO);
     }

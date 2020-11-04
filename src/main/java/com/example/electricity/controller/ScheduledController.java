@@ -77,14 +77,6 @@ public class ScheduledController {
         if(!forObject.equals("success")){
             return ResultUtil.error(500,"设置定时失败");
         }
-        scheduledByID.setCronStartTime(startTime);
-        scheduledByID.setCronEndTime(endTime);
-        if(startTime.equals("00:00")&&endTime.equals("00:00")){
-            scheduledByID.setCronStatus(-1);
-        }else{
-            scheduledByID.setCronStatus(1);
-        }
-        iScheduledService.updateScheduled(scheduledByID);
         return ResultUtil.seccess();
     }
 

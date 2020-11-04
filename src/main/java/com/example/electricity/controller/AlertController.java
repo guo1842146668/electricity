@@ -3,7 +3,9 @@ package com.example.electricity.controller;
 
 import com.example.electricity.common.Result;
 import com.example.electricity.common.ResultUtil;
+import com.example.electricity.entity.User;
 import com.example.electricity.service.IAlertService;
+import com.example.electricity.service.ISysUserService;
 import com.example.electricity.tool.ReadFile;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,8 @@ import java.util.Map;
 public class AlertController {
     @Resource
     private IAlertService iAlertService;
+    @Resource
+    private ISysUserService iSysUserService;
 
     @GetMapping("/getAlert")
     public Result getAlert(Integer userID,String condition,String startDate,String endDate,Integer page,Integer count){
@@ -44,6 +48,13 @@ public class AlertController {
         map.put("condition",condition);
         map.put("startDate",startDate);
         map.put("endDate",endDate);
-        return ResultUtil.seccess(iAlertService.getAlert(map,page,count));
+
+        User byID = iSysUserService.getByID(userID);
+        if(byID.getType().equals(1)){
+            return ResultUtil.seccess(iAlertService.getAlertAdmin(map,page,count));
+        }else{
+            return ResultUtil.seccess(iAlertService.getAlert(map,page,count));
+        }
+
     }
 }

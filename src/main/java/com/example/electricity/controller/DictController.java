@@ -48,4 +48,10 @@ public class DictController {
     public Result getType(){
         return ResultUtil.seccess(iDictService.getGuide(DictEnum.Type));
     }
+
+    @GetMapping("phone")
+    public Result getPhone(){
+        return  ResultUtil.seccess(iDictService.getPhone());
+    }
+
 }

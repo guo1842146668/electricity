@@ -5,9 +5,25 @@
     <select id="getAlert" resultType="java.util.Map">
         SELECT alertTime,a.equipmentNO,equipmentAddress
         from alert a ,equipment e
-        where a.equipmentNO=e.equipmentNO and e.userID = #{userID}
+        where a.equipmentNO=e.equipmentNO and   e.equipmentNO in	(select  equipmentNO
+        from equipment where userID = #{userID} or userID in (SELECT user_id from user where dept_id = #{userID}))
         <if test="condition != null">
-        and (e.equipmentNO like "%"#{condition}"%" || e.equipmentName like "%"#{condition}"%" || e.equipmentAddress like "%"#{condition}"%")
+            and (e.equipmentNO like "%"#{condition}"%" || e.equipmentName like "%"#{condition}"%" || e.equipmentAddress like "%"#{condition}"%")
+        </if>
+        <if test="startDate != null &amp; startDate !=''" >
+            and a.alertTime &gt;= #{startDate}
+        </if>
+        <if test="endDate != null &amp; endDate !=''">
+            and a.alertTime  &lt;= date_sub(#{endDate},interval -1 day)
+        </if>
+        ORDER BY  a.alertTime DESC
+    </select>
+    <select id="getAlertAdmin" resultType="java.util.Map">
+        SELECT alertTime,a.equipmentNO,equipmentAddress
+        from alert a ,equipment e
+        where a.equipmentNO=e.equipmentNO
+        <if test="condition != null">
+            and (e.equipmentNO like "%"#{condition}"%" || e.equipmentName like "%"#{condition}"%" || e.equipmentAddress like "%"#{condition}"%")
         </if>
         <if test="startDate != null &amp; startDate !=''" >
             and a.alertTime &gt;= #{startDate}

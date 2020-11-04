@@ -31,4 +31,12 @@ public class AlertServiceImpl extends ServiceImpl<AlertMapper, Alert> implements
         PageInfo<Map<String, Object>> pageInfo=new PageInfo<>(alert);
         return pageInfo;
     }
+
+    @Override
+    public PageInfo<Map<String, Object>> getAlertAdmin(Map<String, Object> map, Integer page, Integer count) {
+        PageHelper.startPage(page,count);
+        List<Map<String, Object>> alert = alertMapper.getAlertAdmin(map);
+        PageInfo<Map<String, Object>> pageInfo=new PageInfo<>(alert);
+        return pageInfo;
+    }
 }

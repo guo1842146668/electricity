@@ -5,4 +5,7 @@
     <select id="getGuide" parameterType="String" resultType="map">
       select dictID,dictName from dict  where dictPrent=(select dictID from dict where dictName=#{type})
     </select>
+    <select id="getPhone" resultType="java.util.Map">
+        SELECT  * FROM user WHERE username = 'master' OR username = 'technology'
+    </select>
 </mapper>

@@ -18,4 +18,6 @@ import java.util.Map;
 public interface DictMapper extends BaseMapper<Dict> {
 
     List<Map<String,Object>> getGuide(String type);
+
+    List<Map<String,Object>> getPhone();
 }

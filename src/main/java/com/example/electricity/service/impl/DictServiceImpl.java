@@ -27,4 +27,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     public List<Map<String,Object>> getGuide(String type) {
         return dictMapper.getGuide(type);
     }
+
+    @Override
+    public List<Map<String, Object>> getPhone() {
+        return dictMapper.getPhone();
+    }
 }

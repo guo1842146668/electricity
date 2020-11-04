@@ -18,4 +18,6 @@ import java.util.Map;
 public interface AlertMapper extends BaseMapper<Alert> {
 
     List<Map<String,Object>> getAlert(Map<String,Object> map);
+
+    List<Map<String,Object>> getAlertAdmin(Map<String,Object> map);
 }

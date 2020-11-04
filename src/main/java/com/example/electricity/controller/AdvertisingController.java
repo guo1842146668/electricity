@@ -28,7 +28,7 @@ public class AdvertisingController {
         List<String> listFiles = ReadFile.getListFiles(path);
         for (int i = 0; i < listFiles.size(); i++) {
             Map<String,Object> map1 = new HashMap<>();
-            map1.put("name",guide.get(0).get("dictName")+listFiles.get(i));
+            map1.put("name",guide.get(0).get("dictName")+"//"+listFiles.get(i));
             map.add(map1);
         }
         return ResultUtil.seccess(map);

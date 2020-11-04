@@ -18,6 +18,8 @@ public interface IEquipmentService extends IService<Equipment> {
 
         List<Map<String,Object>> getAllByID(Map<String,Object> map);
 
+        List<Map<String,Object>> getAllByIDAdmin(Map<String,Object> map);
+
         Map<String,Object> getEquipmentNO(String equipmentNO);
 
         int saveEquipment(Equipment equipment);

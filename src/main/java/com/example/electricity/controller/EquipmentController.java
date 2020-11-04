@@ -4,7 +4,9 @@ package com.example.electricity.controller;
 import com.example.electricity.common.Result;
 import com.example.electricity.common.ResultUtil;
 import com.example.electricity.entity.Equipment;
+import com.example.electricity.entity.User;
 import com.example.electricity.service.IEquipmentService;
+import com.example.electricity.service.ISysUserService;
 import com.example.electricity.tool.ReadFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -27,7 +29,8 @@ import java.util.Map;
 public class EquipmentController {
     @Resource
     private IEquipmentService iEquipmentService;
-
+    @Resource
+    private ISysUserService iSysUserService;
     /**
      *  获取信息列表
      * @param userID      当前登陆用户的ID
@@ -43,7 +46,13 @@ public class EquipmentController {
         Map<String,Object> map=new HashMap<>();
         map.put("userID",userID);
         map.put("condition",condition);
-    return ResultUtil.seccess(iEquipmentService.getAllByID(map));
+        User byID = iSysUserService.getByID(userID);
+        if(byID.getType().equals(1)){
+            return ResultUtil.seccess(iEquipmentService.getAllByIDAdmin(map));
+        }else{
+            return ResultUtil.seccess(iEquipmentService.getAllByID(map));
+        }
+
     }
 
     @GetMapping("/getEquipmentNO")

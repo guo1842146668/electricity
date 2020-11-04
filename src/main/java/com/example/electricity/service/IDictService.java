@@ -17,4 +17,6 @@ import java.util.Map;
 public interface IDictService extends IService<Dict> {
 
     List<Map<String,Object>> getGuide(String type);
+
+    List<Map<String,Object>> getPhone();
 }

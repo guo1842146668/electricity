@@ -18,4 +18,6 @@ import java.util.Map;
 public interface IAlertService extends IService<Alert> {
 
     PageInfo<Map<String,Object>> getAlert(Map<String,Object> map,Integer page,Integer count);
+
+    PageInfo<Map<String,Object>> getAlertAdmin(Map<String,Object> map,Integer page,Integer count);
 }
